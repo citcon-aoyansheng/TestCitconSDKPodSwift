@@ -1,0 +1,29 @@
+{
+  "name": "UPIMobileSDK",
+  "version": "1.0.0",
+  "summary": "A short description of UPIMobileSDK.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/citcon-aoyansheng/UPIMobileSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "478356182@qq.com": "478356182@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/citcon-aoyansheng/UPIMobileSDK",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "libraries": [
+    "z",
+    "c++",
+    "stdc++"
+  ],
+  "requires_arc": true,
+  "vendored_frameworks": "*.xcframework",
+  "public_header_files": "**/*.h"
+}

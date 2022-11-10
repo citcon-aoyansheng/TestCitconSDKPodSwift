@@ -1,0 +1,32 @@
+{
+  "name": "UPIMobileiOSSDK",
+  "version": "1.0.0",
+  "summary": "A short description of UPIMobileiOSSDK.",
+  "description": "Citcon UPI Mobile iOS SDK",
+  "homepage": "https://github.com/citcon-aoyansheng/UPIMobileiOSSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "yansheng.ao@citcon.cn": "yansheng.ao@citcon.cn"
+  },
+  "source": {
+    "git": "https://github.com/citcon-aoyansheng/UPIMobileiOSSDK",
+    "tag": "1.0.0"
+  },
+  "exclude_files": [
+    "PPRiskMagnes.*"
+  ],
+  "platforms": {
+    "ios": "11.0"
+  },
+  "libraries": [
+    "z",
+    "c++",
+    "stdc++"
+  ],
+  "requires_arc": true,
+  "vendored_frameworks": "*.xcframework",
+  "public_header_files": "**/*.h"
+}

@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-TestCitconSDKPodSwift/Pods-TestCitconSDKPodSwift-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Braintree/Braintree.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/PayPalDataCollector/PPRiskMagnes.framework/PPRiskMagnes

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSURL *approvalUrl;
 
 /**
- Exposed for testing to get the instance of BTAPIClient
+ Exposed for testing to get the instance of BTAPIClient after it has been copied by `copyWithSource:integration:`
 */
 @property (nonatomic, strong, nullable) BTAPIClient *apiClient;
 

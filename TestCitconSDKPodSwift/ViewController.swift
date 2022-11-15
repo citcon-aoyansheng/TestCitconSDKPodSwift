@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         print("test..")
         
         CPayManager.sharedInst().setMode(CPaySDK.CPayENVMode.UAT);
-    
+
 
     }
 

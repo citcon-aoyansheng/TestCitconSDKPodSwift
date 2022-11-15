@@ -2,7 +2,6 @@
 #import "Braintree-Version.h"
 #import "BTAPIPinnedCertificates.h"
 #import "BTLogger_Internal.h"
-#import "BTCacheDateValidator_Internal.h"
 #include <sys/sysctl.h>
 
 #if __has_include(<Braintree/BraintreeCore.h>)
@@ -10,11 +9,13 @@
 #import <Braintree/BTHTTPErrors.h>
 #import <Braintree/BTJSON.h>
 #import <Braintree/BTURLUtils.h>
+#import <Braintree/BTPayPalIDToken.h>
 #else
 #import <BraintreeCore/BTClientToken.h>
 #import <BraintreeCore/BTHTTPErrors.h>
 #import <BraintreeCore/BTJSON.h>
 #import <BraintreeCore/BTURLUtils.h>
+#import <BraintreeCore/BTPayPalIDToken.h>
 #endif
 
 @interface BTHTTP () <NSURLSessionDelegate>
@@ -35,7 +36,6 @@
     self = [super init];
     if (self) {
         self.baseURL = URL;
-        self.cacheDateValidator = [[BTCacheDateValidator alloc] init];
     }
     
     return self;
@@ -78,6 +78,10 @@
     return [self initWithBaseURL:[clientToken.json[@"clientApiUrl"] asURL] authorizationFingerprint:clientToken.authorizationFingerprint];
 }
 
+- (instancetype)initWithPayPalIDToken:(BTPayPalIDToken *)payPalIDToken {
+    return [self initWithBaseURL:payPalIDToken.baseBraintreeURL authorizationFingerprint:payPalIDToken.token];
+}
+
 - (instancetype)copyWithZone:(NSZone *)zone {
     BTHTTP *copiedHTTP;
     if (self.authorizationFingerprint) {
@@ -103,14 +107,6 @@
 
 - (void)GET:(NSString *)aPath completion:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
     [self GET:aPath parameters:nil completion:completionBlock];
-}
-
-- (void)GET:(NSString *)aPath parameters:(NSDictionary *)parameters shouldCache:(BOOL)shouldCache completion:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
-    if (shouldCache) {
-        [self httpRequestWithCaching:@"GET" path:aPath parameters:parameters completion:completionBlock];
-    } else {
-        [self httpRequest:@"GET" path:aPath parameters:parameters completion:completionBlock];
-    }
 }
 
 - (void)GET:(NSString *)aPath parameters:(NSDictionary *)parameters completion:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
@@ -143,56 +139,15 @@
 
 #pragma mark - Underlying HTTP
 
-- (void)httpRequestWithCaching:(NSString *)method path:(NSString *)aPath parameters:(NSDictionary *)parameters completion:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
-    [self createRequest:method path:aPath parameters:parameters completion:^(NSURLRequest *request, NSError *error) {
-        if (error != nil) {
-            [self handleRequestCompletion:nil request:nil shouldCache:NO response:nil error:error completionBlock:completionBlock];
-            return;
-        }
-        
-        NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
-        
-        if ([self.cacheDateValidator isCacheInvalid:cachedResponse]) {
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
-            cachedResponse = nil;
-        }
-        
-        // The increase in speed of API calls with cached configuration caused an increase in "network connection lost" errors.
-        // Adding this delay allows us to throttle the network requests slightly to reduce load on the servers and decrease connection lost errors.
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            if (cachedResponse != nil) {
-                [self handleRequestCompletion:cachedResponse.data request:nil shouldCache:NO response:cachedResponse.response error:nil completionBlock:completionBlock];
-            } else {
-                NSURLSessionTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                    [self handleRequestCompletion:data request:request shouldCache:YES response:response error:error completionBlock:completionBlock];
-                }];
-                [task resume];
-            }
-        });
-    }];
-}
-
 - (void)httpRequest:(NSString *)method path:(NSString *)aPath parameters:(NSDictionary *)parameters completion:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
-    [self createRequest:method path:aPath parameters:parameters completion:^(NSURLRequest *request, NSError *error) {
-        if (error != nil) {
-            [self handleRequestCompletion:nil request:nil shouldCache:NO response:nil error:error completionBlock:completionBlock];
-            return;
-        }
-        NSURLSessionTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            [self handleRequestCompletion:data request:request shouldCache:NO response:response error:error completionBlock:completionBlock];
-        }];
-        [task resume];
-    }];
-}
-
-- (void)createRequest:(NSString *)method path:(NSString *)aPath parameters:(NSDictionary *)parameters completion:(void(^)(NSURLRequest *request, NSError *error))completionBlock {
+    
     BOOL hasHttpPrefix = aPath != nil && [aPath hasPrefix:@"http"];
     if (!hasHttpPrefix && (!self.baseURL || [self.baseURL.absoluteString isEqualToString:@""])) {
         NSMutableDictionary *errorUserInfo = [NSMutableDictionary new];
         if (method) errorUserInfo[@"method"] = method;
         if (aPath) errorUserInfo[@"path"] = aPath;
         if (parameters) errorUserInfo[@"parameters"] = parameters;
-        completionBlock(nil, [NSError errorWithDomain:BTHTTPErrorDomain code:BTHTTPErrorCodeMissingBaseURL userInfo:errorUserInfo]);
+        completionBlock(nil, nil, [NSError errorWithDomain:BTHTTPErrorDomain code:BTHTTPErrorCodeMissingBaseURL userInfo:errorUserInfo]);
         return;
     }
 
@@ -225,7 +180,7 @@
         if (aPath) errorUserInfo[@"path"] = aPath;
         if (parameters) errorUserInfo[@"parameters"] = parameters;
         errorUserInfo[NSLocalizedFailureReasonErrorKey] = @"fullPathURL was nil";
-        completionBlock(nil, [NSError errorWithDomain:BTHTTPErrorDomain code:BTHTTPErrorCodeMissingBaseURL userInfo:errorUserInfo]);
+        completionBlock(nil, nil, [NSError errorWithDomain:BTHTTPErrorDomain code:BTHTTPErrorCodeMissingBaseURL userInfo:errorUserInfo]);
         return;
     }
     
@@ -253,7 +208,7 @@
         }
 
         if (jsonSerializationError != nil) {
-            completionBlock(nil, jsonSerializationError);
+            completionBlock(nil, nil, jsonSerializationError);
             return;
         }
 
@@ -266,11 +221,15 @@
     [request setAllHTTPHeaderFields:headers];
 
     [request setHTTPMethod:method];
-    
-    completionBlock(request, nil);
+
+    // Perform the actual request
+    NSURLSessionTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        [self handleRequestCompletion:data response:response error:error completionBlock:completionBlock];
+    }];
+    [task resume];
 }
 
-- (void)handleRequestCompletion:(NSData *)data request:(NSURLRequest *)request shouldCache:(BOOL)shouldCache response:(NSURLResponse *)response error:(NSError *)error completionBlock:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
+- (void)handleRequestCompletion:(NSData *)data response:(NSURLResponse *)response error:(NSError *)error completionBlock:(void(^)(BTJSON *body, NSHTTPURLResponse *response, NSError *error))completionBlock {
     // Handle errors for which the response is irrelevant
     // e.g. SSL, unavailable network, etc.
     if (error != nil) {
@@ -335,13 +294,6 @@
             [self callCompletionBlock:completionBlock body:nil response:nil error:json.asError];
         }
         return;
-    }
-    
-    // We should only cache the response if we do not have an error and status code is 2xx
-    BOOL successStatusCode = httpResponse.statusCode >= 200 && httpResponse.statusCode < 300;
-    if (request != nil && shouldCache && successStatusCode) {
-        NSCachedURLResponse *cachedURLResponse = [[NSCachedURLResponse alloc]initWithResponse:response data:data];
-        [[NSURLCache sharedURLCache] storeCachedResponse:cachedURLResponse forRequest:request];
     }
 
     [self callCompletionBlock:completionBlock body:json response:httpResponse error:nil];

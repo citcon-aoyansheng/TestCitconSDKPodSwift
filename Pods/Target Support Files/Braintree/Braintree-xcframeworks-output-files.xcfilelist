@@ -1,1 +1,3 @@
+${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/DataCollector/KountDataCollector.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/PayPalDataCollector/PPRiskMagnes.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/ThreeDSecure/CardinalMobile.framework

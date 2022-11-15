@@ -27,17 +27,30 @@ Pod::Spec.new do |s|
   s.author           = { 'yansheng.ao@citcon.cn' => 'yansheng.ao@citcon.cn' }
   s.source           = { :git => 'https://github.com/citcon-aoyansheng/UPIMobileiOSSDK', :tag => s.version.to_s }
 
-  s.exclude_files = ['PPRiskMagnes.*']
+#  s.exclude_files = ['PPRiskMagnes.xcframework', 'Alamofire.xcframework', 'Braintree.xcframework', 'CardinalMobile.xcframework']
   
-  s.ios.deployment_target = '11.0'
-  s.libraries = 'z','c++', 'stdc++'
+  s.ios.deployment_target = '13.0'
+  s.libraries = 'stdc++'#,'z','c++'
 
   s.requires_arc = true
-  s.vendored_frameworks ='*.xcframework'
-  s.public_header_files = '**/*.h'
+  s.vendored_frameworks ='DynamicLibrary/Frameworks/*.{xcframework}'
+# s.public_header_files = 'frameworks/**/*.h'
+
+  s.resources = 'DynamicLibrary/Resources/AlipaySDK.{bundle}'
+
+  s.dependency 'Alamofire', '5.5.0'
+
+  s.dependency 'Braintree/Core', '5.5.0'
+  s.dependency 'Braintree/Card', '5.5.0'
+  s.dependency 'Braintree/PayPal', '5.5.0'
+  s.dependency 'Braintree/ApplePay', '5.5.0'
+  s.dependency 'Braintree/DataCollector', '5.5.0'
+  s.dependency 'Braintree/PaymentFlow', '5.5.0'
+  s.dependency 'Braintree/PayPalDataCollector', '5.5.0'
+  s.dependency 'Braintree/UnionPay', '5.5.0'
+  s.dependency 'Braintree/Venmo', '5.5.0'
+  s.dependency 'Braintree/ThreeDSecure', '5.5.0'
 
   
-
-
   
 end

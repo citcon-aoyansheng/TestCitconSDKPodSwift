@@ -1,0 +1,7 @@
+${PODS_ROOT}/Target Support Files/UPIMobileiOSSDK/UPIMobileiOSSDK-xcframeworks.sh
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/AlipayExt.xcframework
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/AMS.xcframework
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/BraintreeDropIn.xcframework
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/CPaySDK.xcframework
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/UnionPayExt.xcframework
+${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/WechatPayExt.xcframework

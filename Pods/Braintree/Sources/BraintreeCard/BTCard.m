@@ -34,6 +34,10 @@
         p[@"cardholder_name"] = self.cardholderName;
     }
 
+    if (self.expirationMonth && self.expirationYear) {
+        p[@"expiration_date"] = [NSString stringWithFormat:@"%@/%@", self.expirationMonth, self.expirationYear];
+    }
+    
     if (self.cvv) {
         p[@"cvv"] = self.cvv;
     }

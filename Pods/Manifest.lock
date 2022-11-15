@@ -1,26 +1,66 @@
 PODS:
-  - Braintree (5.16.0):
-    - Braintree/Card (= 5.16.0)
-    - Braintree/Core (= 5.16.0)
-    - Braintree/PayPal (= 5.16.0)
-  - Braintree/Card (5.16.0):
+  - Alamofire (5.5.0)
+  - Braintree/ApplePay (5.5.0):
     - Braintree/Core
-  - Braintree/Core (5.16.0)
-  - Braintree/PayPal (5.16.0):
+  - Braintree/Card (5.5.0):
+    - Braintree/Core
+  - Braintree/Core (5.5.0)
+  - Braintree/DataCollector (5.5.0):
+    - Braintree/Core
+  - Braintree/PaymentFlow (5.5.0):
     - Braintree/Core
     - Braintree/PayPalDataCollector
-  - Braintree/PayPalDataCollector (5.16.0)
+  - Braintree/PayPal (5.5.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+  - Braintree/PayPalDataCollector (5.5.0)
+  - Braintree/ThreeDSecure (5.5.0):
+    - Braintree/Card
+    - Braintree/PaymentFlow
+  - Braintree/UnionPay (5.5.0):
+    - Braintree/Card
+  - Braintree/Venmo (5.5.0):
+    - Braintree/Core
+  - UPIMobileiOSSDK (1.0.0):
+    - Alamofire (= 5.5.0)
+    - Braintree/ApplePay (= 5.5.0)
+    - Braintree/Card (= 5.5.0)
+    - Braintree/Core (= 5.5.0)
+    - Braintree/DataCollector (= 5.5.0)
+    - Braintree/PaymentFlow (= 5.5.0)
+    - Braintree/PayPal (= 5.5.0)
+    - Braintree/PayPalDataCollector (= 5.5.0)
+    - Braintree/ThreeDSecure (= 5.5.0)
+    - Braintree/UnionPay (= 5.5.0)
+    - Braintree/Venmo (= 5.5.0)
 
 DEPENDENCIES:
-  - Braintree
+  - Braintree/ApplePay (= 5.5.0)
+  - Braintree/Card (= 5.5.0)
+  - Braintree/Core (= 5.5.0)
+  - Braintree/DataCollector (= 5.5.0)
+  - Braintree/PaymentFlow (= 5.5.0)
+  - Braintree/PayPal (= 5.5.0)
+  - Braintree/PayPalDataCollector (= 5.5.0)
+  - Braintree/ThreeDSecure (= 5.5.0)
+  - Braintree/UnionPay (= 5.5.0)
+  - Braintree/Venmo (= 5.5.0)
+  - UPIMobileiOSSDK (from `./UPIMobileiOSSDK`)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Braintree
 
-SPEC CHECKSUMS:
-  Braintree: 944176b3ddb7c7c35f2969ce0a60262169baabe9
+EXTERNAL SOURCES:
+  UPIMobileiOSSDK:
+    :path: "./UPIMobileiOSSDK"
 
-PODFILE CHECKSUM: 270219c32668169cf80be18fec2c92163313fea2
+SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  Braintree: acd5dd18b4aff8858346d6b6f6f3b5bc059332fb
+  UPIMobileiOSSDK: ba18b84940e814a89ea104536945de9ca4dc8c13
+
+PODFILE CHECKSUM: 87fd545ac1808a1582a1321dbac8c9ee3f06962e
 
 COCOAPODS: 1.11.3

@@ -1,0 +1,12 @@
+##############################################
+# ChangeLog
+# 
+# Created by long.zhao
+# 
+# A file for recording changes to BraintreeDropIn and its purpose.
+
+
+1. 03/03 2022
+Files:
+	BraintreeDropIn/BraintreeDropIn/Support\ Files/BraintreeDropIn-umbrella.h
+	-- Export BraintreeDropInExt module

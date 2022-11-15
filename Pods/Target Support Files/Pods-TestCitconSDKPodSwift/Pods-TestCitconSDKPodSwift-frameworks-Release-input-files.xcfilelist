@@ -1,3 +1,11 @@
 ${PODS_ROOT}/Target Support Files/Pods-TestCitconSDKPodSwift/Pods-TestCitconSDKPodSwift-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/Braintree/Braintree.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/PayPalDataCollector/PPRiskMagnes.framework/PPRiskMagnes
+${PODS_XCFRAMEWORKS_BUILD_DIR}/Braintree/ThreeDSecure/CardinalMobile.framework/CardinalMobile
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/AlipayExt.framework/AlipayExt
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/AMS.framework/AMS
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/BraintreeDropIn.framework/BraintreeDropIn
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/CPaySDK.framework/CPaySDK
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/UnionPayExt.framework/UnionPayExt
+${PODS_XCFRAMEWORKS_BUILD_DIR}/UPIMobileiOSSDK/WechatPayExt.framework/WechatPayExt

@@ -17,11 +17,23 @@ RSYNC_PROTECT_TMP_FILES=(--filter "P .*.??????")
 variant_for_slice()
 {
   case "$1" in
-  "PPRiskMagnes.xcframework/ios-arm64_x86_64-simulator")
+  "KountDataCollector.xcframework/ios-arm64_x86_64-simulator")
     echo "simulator"
+    ;;
+  "KountDataCollector.xcframework/ios-arm64_armv7")
+    echo ""
     ;;
   "PPRiskMagnes.xcframework/ios-arm64")
     echo ""
+    ;;
+  "PPRiskMagnes.xcframework/ios-arm64_x86_64-simulator")
+    echo "simulator"
+    ;;
+  "CardinalMobile.xcframework/ios-arm64_armv7")
+    echo ""
+    ;;
+  "CardinalMobile.xcframework/ios-arm64_i386_x86_64-simulator")
+    echo "simulator"
     ;;
   esac
 }
@@ -29,11 +41,23 @@ variant_for_slice()
 archs_for_slice()
 {
   case "$1" in
-  "PPRiskMagnes.xcframework/ios-arm64_x86_64-simulator")
+  "KountDataCollector.xcframework/ios-arm64_x86_64-simulator")
     echo "arm64 x86_64"
+    ;;
+  "KountDataCollector.xcframework/ios-arm64_armv7")
+    echo "arm64 armv7"
     ;;
   "PPRiskMagnes.xcframework/ios-arm64")
     echo "arm64"
+    ;;
+  "PPRiskMagnes.xcframework/ios-arm64_x86_64-simulator")
+    echo "arm64 x86_64"
+    ;;
+  "CardinalMobile.xcframework/ios-arm64_armv7")
+    echo "arm64 armv7"
+    ;;
+  "CardinalMobile.xcframework/ios-arm64_i386_x86_64-simulator")
+    echo "arm64 i386 x86_64"
     ;;
   esac
 }
@@ -117,5 +141,7 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/Braintree/Frameworks/XCFrameworks/PPRiskMagnes.xcframework" "Braintree/PayPalDataCollector" "framework" "ios-arm64_x86_64-simulator" "ios-arm64"
+install_xcframework "${PODS_ROOT}/Braintree/Frameworks/XCFrameworks/KountDataCollector.xcframework" "Braintree/DataCollector" "library" "ios-arm64_x86_64-simulator" "ios-arm64_armv7"
+install_xcframework "${PODS_ROOT}/Braintree/Frameworks/XCFrameworks/PPRiskMagnes.xcframework" "Braintree/PayPalDataCollector" "framework" "ios-arm64" "ios-arm64_x86_64-simulator"
+install_xcframework "${PODS_ROOT}/Braintree/Frameworks/XCFrameworks/CardinalMobile.xcframework" "Braintree/ThreeDSecure" "framework" "ios-arm64_armv7" "ios-arm64_i386_x86_64-simulator"
 

@@ -15,18 +15,46 @@
     "git": "https://github.com/citcon-aoyansheng/UPIMobileiOSSDK",
     "tag": "1.0.0"
   },
-  "exclude_files": [
-    "PPRiskMagnes.*"
-  ],
   "platforms": {
-    "ios": "11.0"
+    "ios": "13.0"
   },
-  "libraries": [
-    "z",
-    "c++",
-    "stdc++"
-  ],
+  "libraries": "stdc++",
   "requires_arc": true,
-  "vendored_frameworks": "*.xcframework",
-  "public_header_files": "**/*.h"
+  "vendored_frameworks": "DynamicLibrary/Frameworks/*.{xcframework}",
+  "resources": "DynamicLibrary/Resources/AlipaySDK.{bundle}",
+  "dependencies": {
+    "Alamofire": [
+      "5.5.0"
+    ],
+    "Braintree/Core": [
+      "5.5.0"
+    ],
+    "Braintree/Card": [
+      "5.5.0"
+    ],
+    "Braintree/PayPal": [
+      "5.5.0"
+    ],
+    "Braintree/ApplePay": [
+      "5.5.0"
+    ],
+    "Braintree/DataCollector": [
+      "5.5.0"
+    ],
+    "Braintree/PaymentFlow": [
+      "5.5.0"
+    ],
+    "Braintree/PayPalDataCollector": [
+      "5.5.0"
+    ],
+    "Braintree/UnionPay": [
+      "5.5.0"
+    ],
+    "Braintree/Venmo": [
+      "5.5.0"
+    ],
+    "Braintree/ThreeDSecure": [
+      "5.5.0"
+    ]
+  }
 }

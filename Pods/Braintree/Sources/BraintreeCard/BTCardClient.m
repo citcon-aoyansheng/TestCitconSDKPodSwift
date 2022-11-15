@@ -93,16 +93,13 @@ NSString *const BTCardClientGraphQLTokenizeFeature = @"tokenize_credit_cards";
                       completion:^(BTJSON * _Nullable body, __unused NSHTTPURLResponse * _Nullable response, NSError * _Nullable error)
              {
                  if (error) {
-                     if (error.code == NETWORK_CONNECTION_LOST_CODE) {
-                         [self.apiClient sendAnalyticsEvent:@"ios.tokenize-card.graphQL.network-connection.failure"];
-                     }
                      NSHTTPURLResponse *response = error.userInfo[BTHTTPURLResponseKey];
                      NSError *callbackError = error;
 
                      if (response.statusCode == 422) {
-                         if (error.userInfo) {
-                             callbackError = [self constructCallbackErrorForErrorUserInfo:error.userInfo error:error];
-                         }
+                             callbackError = [NSError errorWithDomain:BTCardClientErrorDomain
+                                                                 code:BTCardClientErrorTypeCustomerInputInvalid
+                                                             userInfo:[self.class validationErrorUserInfo:error.userInfo]];
                      }
 
                      [self sendGraphQLAnalyticsEventWithSuccess:NO];
@@ -124,16 +121,13 @@ NSString *const BTCardClientGraphQLTokenizeFeature = @"tokenize_credit_cards";
                       completion:^(BTJSON *body, __unused NSHTTPURLResponse *response, NSError *error)
              {
                  if (error != nil) {
-                     if (error.code == NETWORK_CONNECTION_LOST_CODE) {
-                         [self.apiClient sendAnalyticsEvent:@"ios.tokenize-card.network-connection.failure"];
-                     }
                      NSHTTPURLResponse *response = error.userInfo[BTHTTPURLResponseKey];
                      NSError *callbackError = error;
 
                      if (response.statusCode == 422) {
-                         if (error.userInfo) {
-                             callbackError = [self constructCallbackErrorForErrorUserInfo:error.userInfo error:error];
-                         }
+                         callbackError = [NSError errorWithDomain:BTCardClientErrorDomain
+                                                             code:BTCardClientErrorTypeCustomerInputInvalid
+                                                         userInfo:[self.class validationErrorUserInfo:error.userInfo]];
                      }
 
                      if (request.enrollmentID) {
@@ -241,32 +235,6 @@ NSString *const BTCardClientGraphQLTokenizeFeature = @"tokenize_credit_cards";
     NSArray *graphQLFeatures = [configuration.json[@"graphQL"][@"features"] asStringArray];
 
     return graphQLFeatures && [graphQLFeatures containsObject:BTCardClientGraphQLTokenizeFeature];
-}
-
-- (NSError *)constructCallbackErrorForErrorUserInfo:(NSDictionary *)errorUserInfo error:(NSError *)error {
-    NSError *callbackError = error;
-    BTJSON *errorCode = nil;
-    
-    BTJSON *errorResponse = [error.userInfo objectForKey:BTHTTPJSONResponseBodyKey];
-    BTJSON *fieldErrors = [errorResponse[@"fieldErrors"] asArray].firstObject;
-    errorCode = [fieldErrors[@"fieldErrors"] asArray].firstObject[@"code"];
-
-    if (errorCode == nil) {
-        BTJSON *errorResponse = [errorUserInfo objectForKey:BTHTTPJSONResponseBodyKey];
-        errorCode = [errorResponse[@"errors"] asArray].firstObject[@"extensions"][@"legacyCode"];
-    }
-
-    // Gateway error code for card already exists
-    if ([errorCode.asString  isEqual: @"81724"]) {
-        callbackError = [NSError errorWithDomain:BTCardClientErrorDomain
-                                            code:BTCardClientErrorTypeCardAlreadyExists
-                                        userInfo:[self.class validationErrorUserInfo:error.userInfo]];
-    } else {
-        callbackError = [NSError errorWithDomain:BTCardClientErrorDomain
-                                            code:BTCardClientErrorTypeCustomerInputInvalid
-                                        userInfo:[self.class validationErrorUserInfo:error.userInfo]];
-    }
-    return callbackError;
 }
 
 @end

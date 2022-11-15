@@ -84,7 +84,7 @@ NSString * _Nonnull const PayPalEnvironmentMock = @"mock";
 
 - (instancetype)initWithAPIClient:(BTAPIClient *)apiClient {
     if (self = [super init]) {
-        _apiClient = apiClient;
+        _apiClient = [apiClient copyWithSource:BTClientMetadataSourcePayPalBrowser integration:apiClient.metadata.integration];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(applicationDidBecomeActive:)
                                                    name:UIApplicationDidBecomeActiveNotification
@@ -166,9 +166,6 @@ NSString * _Nonnull const PayPalEnvironmentMock = @"mock";
                   parameters:[request parametersWithConfiguration:configuration]
                   completion:^(BTJSON *body, __unused NSHTTPURLResponse *response, NSError *error) {
             if (error) {
-                if (error.code == NETWORK_CONNECTION_LOST_CODE) {
-                    [self.apiClient sendAnalyticsEvent:@"ios.paypal.tokenize.network-connection.failure"];
-                }
                 NSString *errorDetailsIssue = ((BTJSON *)error.userInfo[BTHTTPJSONResponseBodyKey][@"paymentResource"][@"errorDetails"][0][@"issue"]).asString;
                 if (error.userInfo[NSLocalizedDescriptionKey] == nil && errorDetailsIssue != nil) {
                     NSMutableDictionary *dictionary = [error.userInfo mutableCopy];
@@ -190,7 +187,7 @@ NSString * _Nonnull const PayPalEnvironmentMock = @"mock";
 
             NSString *pairingID = [self.class tokenFromApprovalURL:approvalUrl];
 
-            self.clientMetadataID = self.payPalRequest.riskCorrelationId ? self.payPalRequest.riskCorrelationId : [PPDataCollector clientMetadataID:pairingID isSandbox:[configuration.environment isEqualToString:@"sandbox"]];
+            self.clientMetadataID = self.payPalRequest.riskCorrelationId ? self.payPalRequest.riskCorrelationId : [PPDataCollector clientMetadataID:pairingID];
 
             BOOL analyticsSuccess = error ? NO : YES;
 
@@ -433,12 +430,7 @@ NSString * _Nonnull const PayPalEnvironmentMock = @"mock";
             return windowScene.windows.firstObject;
         }
     }
-
-    if (@available(iOS 15, *)) {
-        return ((UIWindowScene *)UIApplication.sharedApplication.connectedScenes.allObjects.firstObject).windows.firstObject;
-    } else {
-        return UIApplication.sharedApplication.windows.firstObject;
-    }
+    return UIApplication.sharedApplication.windows.firstObject;
 }
 
 #pragma mark - Preflight check
@@ -585,9 +577,6 @@ NSString * _Nonnull const PayPalEnvironmentMock = @"mock";
               parameters:parameters
               completion:^(BTJSON *body, __unused NSHTTPURLResponse *response, NSError *error) {
         if (error) {
-            if (error.code == NETWORK_CONNECTION_LOST_CODE) {
-                [self.apiClient sendAnalyticsEvent:@"ios.paypal.handle-browser-switch.network-connection.failure"];
-            }
             [self sendAnalyticsEventForTokenizationFailureForPaymentType:paymentType];
             if (completionBlock) {
                 completionBlock(nil, error);

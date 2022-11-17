@@ -20,41 +20,10 @@
   },
   "libraries": "stdc++",
   "requires_arc": true,
-  "vendored_frameworks": "DynamicLibrary/Frameworks/*.{xcframework}",
-  "resources": "DynamicLibrary/Resources/AlipaySDK.{bundle}",
+  "vendored_frameworks": "DynamicLibrary-NO-BT/Frameworks/*.{xcframework}",
   "dependencies": {
     "Alamofire": [
-      "5.5.0"
-    ],
-    "Braintree/Core": [
-      "5.5.0"
-    ],
-    "Braintree/Card": [
-      "5.5.0"
-    ],
-    "Braintree/PayPal": [
-      "5.5.0"
-    ],
-    "Braintree/ApplePay": [
-      "5.5.0"
-    ],
-    "Braintree/DataCollector": [
-      "5.5.0"
-    ],
-    "Braintree/PaymentFlow": [
-      "5.5.0"
-    ],
-    "Braintree/PayPalDataCollector": [
-      "5.5.0"
-    ],
-    "Braintree/UnionPay": [
-      "5.5.0"
-    ],
-    "Braintree/Venmo": [
-      "5.5.0"
-    ],
-    "Braintree/ThreeDSecure": [
-      "5.5.0"
+      "4.9.0"
     ]
   }
 }

@@ -17,23 +17,23 @@ RSYNC_PROTECT_TMP_FILES=(--filter "P .*.??????")
 variant_for_slice()
 {
   case "$1" in
-  "AlipayExt.xcframework/ios-x86_64-simulator")
+  "Alamofire.xcframework/ios-arm64")
+    echo ""
+    ;;
+  "Alamofire.xcframework/ios-x86_64-simulator")
     echo "simulator"
     ;;
   "AlipayExt.xcframework/ios-arm64")
     echo ""
     ;;
-  "AMS.xcframework/ios-x86_64-simulator")
+  "AlipayExt.xcframework/ios-x86_64-simulator")
     echo "simulator"
     ;;
   "AMS.xcframework/ios-arm64")
     echo ""
     ;;
-  "BraintreeDropIn.xcframework/ios-x86_64-simulator")
+  "AMS.xcframework/ios-x86_64-simulator")
     echo "simulator"
-    ;;
-  "BraintreeDropIn.xcframework/ios-arm64")
-    echo ""
     ;;
   "CPaySDK.xcframework/ios-x86_64-simulator")
     echo "simulator"
@@ -41,17 +41,17 @@ variant_for_slice()
   "CPaySDK.xcframework/ios-arm64")
     echo ""
     ;;
-  "UnionPayExt.xcframework/ios-x86_64-simulator")
-    echo "simulator"
-    ;;
   "UnionPayExt.xcframework/ios-arm64")
     echo ""
     ;;
-  "WechatPayExt.xcframework/ios-x86_64-simulator")
+  "UnionPayExt.xcframework/ios-x86_64-simulator")
     echo "simulator"
     ;;
   "WechatPayExt.xcframework/ios-arm64")
     echo ""
+    ;;
+  "WechatPayExt.xcframework/ios-x86_64-simulator")
+    echo "simulator"
     ;;
   esac
 }
@@ -59,23 +59,23 @@ variant_for_slice()
 archs_for_slice()
 {
   case "$1" in
-  "AlipayExt.xcframework/ios-x86_64-simulator")
+  "Alamofire.xcframework/ios-arm64")
+    echo "arm64"
+    ;;
+  "Alamofire.xcframework/ios-x86_64-simulator")
     echo "x86_64"
     ;;
   "AlipayExt.xcframework/ios-arm64")
     echo "arm64"
     ;;
-  "AMS.xcframework/ios-x86_64-simulator")
+  "AlipayExt.xcframework/ios-x86_64-simulator")
     echo "x86_64"
     ;;
   "AMS.xcframework/ios-arm64")
     echo "arm64"
     ;;
-  "BraintreeDropIn.xcframework/ios-x86_64-simulator")
+  "AMS.xcframework/ios-x86_64-simulator")
     echo "x86_64"
-    ;;
-  "BraintreeDropIn.xcframework/ios-arm64")
-    echo "arm64"
     ;;
   "CPaySDK.xcframework/ios-x86_64-simulator")
     echo "x86_64"
@@ -83,17 +83,17 @@ archs_for_slice()
   "CPaySDK.xcframework/ios-arm64")
     echo "arm64"
     ;;
-  "UnionPayExt.xcframework/ios-x86_64-simulator")
-    echo "x86_64"
-    ;;
   "UnionPayExt.xcframework/ios-arm64")
     echo "arm64"
     ;;
-  "WechatPayExt.xcframework/ios-x86_64-simulator")
+  "UnionPayExt.xcframework/ios-x86_64-simulator")
     echo "x86_64"
     ;;
   "WechatPayExt.xcframework/ios-arm64")
     echo "arm64"
+    ;;
+  "WechatPayExt.xcframework/ios-x86_64-simulator")
+    echo "x86_64"
     ;;
   esac
 }
@@ -177,10 +177,10 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/AlipayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/AMS.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/BraintreeDropIn.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/CPaySDK.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/UnionPayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
-install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary/Frameworks/WechatPayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/Alamofire.xcframework" "UPIMobileiOSSDK" "framework" "ios-arm64" "ios-x86_64-simulator"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/AlipayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-arm64" "ios-x86_64-simulator"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/AMS.xcframework" "UPIMobileiOSSDK" "framework" "ios-arm64" "ios-x86_64-simulator"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/CPaySDK.xcframework" "UPIMobileiOSSDK" "framework" "ios-x86_64-simulator" "ios-arm64"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/UnionPayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-arm64" "ios-x86_64-simulator"
+install_xcframework "${PODS_ROOT}/../UPIMobileiOSSDK/DynamicLibrary-NO-BT/Frameworks/WechatPayExt.xcframework" "UPIMobileiOSSDK" "framework" "ios-arm64" "ios-x86_64-simulator"
 

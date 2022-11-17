@@ -10,18 +10,18 @@ target 'TestCitconSDKPodSwift' do
   # Pods for TestCitconSDKPodSwift
 
  
-    pod 'Braintree', '= 5.5.0', :subspecs => [
-    'Core',
-    'Card',
-    'PayPal',
-    'ApplePay',
-    'DataCollector',
-    'PaymentFlow',
-    'PayPalDataCollector',
-    'UnionPay',
-    'Venmo',
-    'ThreeDSecure'
-    ]
+#    pod 'Braintree', '= 5.5.0', :subspecs => [
+#    'Core',
+#    'Card',
+#    'PayPal',
+#    'ApplePay',
+#    'DataCollector',
+#    'PaymentFlow',
+#    'PayPalDataCollector',
+#    'UnionPay',
+#    'Venmo',
+#    'ThreeDSecure'
+#    ]
 
 #    pod 'Alamofire', '= 4.9.0'
 

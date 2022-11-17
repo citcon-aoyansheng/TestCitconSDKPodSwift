@@ -33,23 +33,28 @@ Pod::Spec.new do |s|
   s.libraries = 'stdc++'#,'z','c++'
 
   s.requires_arc = true
-  s.vendored_frameworks ='DynamicLibrary/Frameworks/*.{xcframework}'
 # s.public_header_files = 'frameworks/**/*.h'
 
-  s.resources = 'DynamicLibrary/Resources/AlipaySDK.{bundle}'
+#  s.vendored_frameworks ='DynamicLibrary/Frameworks/*.{xcframework}'
+#  s.resources = 'StaticLibrary/Resources/AlipaySDK.{bundle}'
 
-  s.dependency 'Alamofire', '5.5.0'
 
-  s.dependency 'Braintree/Core', '5.5.0'
-  s.dependency 'Braintree/Card', '5.5.0'
-  s.dependency 'Braintree/PayPal', '5.5.0'
-  s.dependency 'Braintree/ApplePay', '5.5.0'
-  s.dependency 'Braintree/DataCollector', '5.5.0'
-  s.dependency 'Braintree/PaymentFlow', '5.5.0'
-  s.dependency 'Braintree/PayPalDataCollector', '5.5.0'
-  s.dependency 'Braintree/UnionPay', '5.5.0'
-  s.dependency 'Braintree/Venmo', '5.5.0'
-  s.dependency 'Braintree/ThreeDSecure', '5.5.0'
+  s.vendored_frameworks ='DynamicLibrary-NO-BT/Frameworks/*.{xcframework}'
+
+
+#  s.dependency 'Alamofire', '5.5.0'
+  s.dependency 'Alamofire', '4.9.0'
+  
+#  s.dependency 'Braintree/Core', '5.5.0'
+#  s.dependency 'Braintree/Card', '5.5.0'
+#  s.dependency 'Braintree/PayPal', '5.5.0'
+#  s.dependency 'Braintree/ApplePay', '5.5.0'
+#  s.dependency 'Braintree/DataCollector', '5.5.0'
+#  s.dependency 'Braintree/PaymentFlow', '5.5.0'
+#  s.dependency 'Braintree/PayPalDataCollector', '5.5.0'
+#  s.dependency 'Braintree/UnionPay', '5.5.0'
+#  s.dependency 'Braintree/Venmo', '5.5.0'
+#  s.dependency 'Braintree/ThreeDSecure', '5.5.0'
 
   
   
